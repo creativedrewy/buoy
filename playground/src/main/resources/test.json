@@ -402,12 +402,6 @@
           {
             "name":"initializerDepositTokenAccount",
             "type":"publicKey"
-          },
-          {
-            "name":"expiryDate",
-            "type":{
-              "option":"i64"
-            }
           }
         ]
       }
