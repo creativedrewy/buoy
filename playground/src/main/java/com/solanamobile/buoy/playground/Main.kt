@@ -30,12 +30,6 @@ fun main(arguments: Array<String>) {
                 )
                 .build()
         )
-//        .addFunction(
-//            FunSpec.builder("main")
-//                .addParameter("args", String::class, KModifier.VARARG)
-//                .addStatement("%T(args[0]).greet()", greeterClass)
-//                .build()
-//        )
         .build()
 
     file.writeTo(System.out)
