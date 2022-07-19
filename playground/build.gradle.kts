@@ -9,7 +9,7 @@ group = "com.solanamobile"
 version = "1.0-SNAPSHOT"
 
 dependencies {
-
+    implementation("com.squareup:kotlinpoet:1.12.0")
 }
 
 tasks.withType<KotlinCompile>() {
