@@ -1,4 +1,4 @@
-package com.solanamobile.buoy.anchorgenerator
+package com.solanamobile.buoy
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin

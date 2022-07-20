@@ -5,7 +5,7 @@ plugins {
     kotlin("jvm")
 }
 
-group = "com.solanamobile.buoy.anchorgenerator"
+group = "com.solanamobile.buoy"
 version = "0.1.0"
 
 repositories {
@@ -16,9 +16,9 @@ repositories {
 
 gradlePlugin {
     plugins {
-        create("samplePlugin") {
-            id = "anchorgenerator"
-            implementationClass = "com.solanamobile.buoy.anchorgenerator.GeneratorPlugin"
+        create("GeneratorPlugin") {
+            id = "com.solanamobile.buoy"
+            implementationClass = "com.solanamobile.buoy.GeneratorPlugin"
         }
     }
 }
