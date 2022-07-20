@@ -51,8 +51,8 @@ android {
     }
 }
 
-idlGenerator {
-    idlSourcePath = file('src/test.json')
+buoyGenerator {
+    idlFilePath = file('src/test.json')
 }
 
 dependencies {

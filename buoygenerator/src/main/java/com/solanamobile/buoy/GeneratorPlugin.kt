@@ -7,7 +7,7 @@ import org.gradle.kotlin.dsl.register
 
 class GeneratorPlugin: Plugin<Project> {
     override fun apply(project: Project) {
-        project.tasks.register<ProcessIdlTask>("idlGenerator")
+        project.tasks.register<ProcessIdlTask>("buoyGenerator")
         project.tasks.findByPath("assemble")?.dependsOn("idlGenerator")
 
         //TODO: Ensure dependencies for the generated code

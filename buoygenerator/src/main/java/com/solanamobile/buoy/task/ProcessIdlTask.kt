@@ -12,11 +12,11 @@ abstract class ProcessIdlTask @Inject constructor(objects: ObjectFactory) : Defa
 
     @InputFile
     @Optional
-    val idlSourcePath: RegularFileProperty = objects.fileProperty()
+    val idlFilePath: RegularFileProperty = objects.fileProperty()
 
     @TaskAction
     fun processIdl() {
-        println(":: You have provided path: ${ idlSourcePath.orNull?.asFile.toString() } ::")
+        println(":: You have provided path: ${ idlFilePath.orNull?.asFile.toString() } ::")
     }
 
 }
