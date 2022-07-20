@@ -8,9 +8,8 @@ import org.gradle.kotlin.dsl.register
 
 class GeneratorPlugin: Plugin<Project> {
     override fun apply(project: Project) {
-        project.tasks.register<MyTask>("idlGenerator") {
-            dependsOn("build")
-        }
+        project.tasks.register<MyTask>("idlGenerator")
+        project.tasks.findByPath("assemble")?.dependsOn("idlGenerator")
     }
 }
 
