@@ -27,7 +27,7 @@ fun classTypeForArgType( argType: String ): KClass<*> {
         "publicKey" -> PublicKey::class
         else -> {
 //            throw Exception("This should not happen.")
-            return ULong::class
+            return ClassName("solanapackagename", argType)::class
         }
     }
 }
@@ -65,6 +65,7 @@ fun main(arguments: Array<String>) {
 
     //Use the objects to generate the contract file
     val contractFile = FileSpec.builder("com.solanamobile.buoy", idlSource.name)
+
     val mainClass = contractFile.addType(
         TypeSpec.classBuilder(idlSource.name)
             .build()
@@ -81,6 +82,12 @@ fun main(arguments: Array<String>) {
 
         // for each meta descriptor, add a parameter accepting
         // the pubkey and generate the AccountMeta item in the list
+        instruction.args.forEach { arg ->
+            val type = classTypeForArgType(arg.type)
+            functionBuilder
+                .addParameter(arg.name, type)
+        }
+
         instruction.accounts.forEach { metaDescriptor ->
 
             val metaItem = String.format("\tAccountMeta(publicKey = %s, isSigner = %s, isWritable = %s)", metaDescriptor.name, metaDescriptor.isSigner.toString(), metaDescriptor.isMut.toString())
