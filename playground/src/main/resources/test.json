@@ -43,12 +43,6 @@
         {
           "name":"walletBump",
           "type":"u8"
-        },
-        {
-          "name":"expiryDate",
-          "type":{
-            "option":"i64"
-          }
         }
       ]
     },
@@ -402,12 +396,6 @@
           {
             "name":"initializerDepositTokenAccount",
             "type":"publicKey"
-          },
-          {
-            "name":"expiryDate",
-            "type":{
-              "option":"i64"
-            }
           }
         ]
       }
