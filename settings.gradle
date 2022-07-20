@@ -3,8 +3,11 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+        mavenLocal()
+        maven { url = "./AnchorGenerator/build/repository" }
     }
 }
+
 dependencyResolutionManagement {
     //repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
 

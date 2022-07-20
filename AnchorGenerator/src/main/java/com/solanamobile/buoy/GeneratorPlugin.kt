@@ -8,13 +8,13 @@ import org.gradle.kotlin.dsl.register
 
 class GeneratorPlugin: Plugin<Project> {
     override fun apply(project: Project) {
-        project.tasks.register<MyTask>("something") {
-            dependsOn("assemble")
+        project.tasks.register<MyTask>("idlGenerator") {
+            dependsOn("build")
         }
     }
 }
 
-class MyTask: DefaultTask() {
+abstract class MyTask: DefaultTask() {
 
     @TaskAction
     fun doSomething() {

@@ -16,8 +16,8 @@ repositories {
 
 gradlePlugin {
     plugins {
-        create("GeneratorPlugin") {
-            id = "com.solanamobile.buoy"
+        create("simplePlugin") {
+            id = "buoy-plugin"
             implementationClass = "com.solanamobile.buoy.GeneratorPlugin"
         }
     }
@@ -28,6 +28,16 @@ dependencies {
     implementation("com.android.tools.build:gradle:4.0.0")
     testImplementation("junit:junit:4.13")
     testImplementation(gradleApi())
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "localPluginRepository"
+            url = uri("build/repository")
+        }
+        mavenLocal()
+    }
 }
 
 //publishing {
