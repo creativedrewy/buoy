@@ -17,7 +17,14 @@ import kotlin.reflect.KClass
 fun classTypeForArgType( argType: String ): KClass<*> {
     return when(argType) {
         "u8" -> UByte::class
+        "u16" -> UShort::class
+        "u32" -> UInt::class
         "u64" -> ULong::class
+        "i8" -> Byte::class
+        "i16" -> Short::class
+        "i32" -> Int::class
+        "i64" -> Long::class
+        "publicKey" -> PublicKey::class
         else -> {
 //            throw Exception("This should not happen.")
             return ULong::class
@@ -117,5 +124,5 @@ fun main(arguments: Array<String>) {
     }
 
     contractFile.build().writeTo(System.out)
-    
+
 }
