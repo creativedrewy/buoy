@@ -9,5 +9,8 @@ class GeneratorPlugin: Plugin<Project> {
     override fun apply(project: Project) {
         project.tasks.register<ProcessIdlTask>("idlGenerator")
         project.tasks.findByPath("assemble")?.dependsOn("idlGenerator")
+
+        //TODO: Ensure dependencies for the generated code
+        //TODO: Add generated output to source sets
     }
 }

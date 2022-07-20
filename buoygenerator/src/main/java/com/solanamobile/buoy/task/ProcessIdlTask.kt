@@ -1,13 +1,22 @@
 package com.solanamobile.buoy.task
 
 import org.gradle.api.DefaultTask
+import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.model.ObjectFactory
+import org.gradle.api.tasks.InputFile
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
+import javax.inject.Inject
 
-abstract class ProcessIdlTask : DefaultTask() {
+abstract class ProcessIdlTask @Inject constructor(objects: ObjectFactory) : DefaultTask() {
+
+    @InputFile
+    @Optional
+    val idlSourcePath: RegularFileProperty = objects.fileProperty()
 
     @TaskAction
     fun processIdl() {
-        println(":: You will process the IDL here! ::")
+        println(":: You have provided path: ${ idlSourcePath.orNull?.asFile.toString() } ::")
     }
 
 }
