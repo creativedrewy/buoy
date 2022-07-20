@@ -72,7 +72,6 @@ fun main(arguments: Array<String>) {
         // start the list of function
         functionBuilder.addStatement("val = listOf(")
 
-
         // for each meta descriptor, add a parameter accepting
         // the pubkey and generate the AccountMeta item in the list
         instruction.accounts.forEach { metaDescriptor ->
@@ -118,28 +117,5 @@ fun main(arguments: Array<String>) {
     }
 
     contractFile.build().writeTo(System.out)
-
-    val file = FileSpec.builder("com.solanamobile", "HelloWorld")
-        .addType(
-            TypeSpec.classBuilder("Greeter")
-                .primaryConstructor(
-                    FunSpec.constructorBuilder()
-                        .addParameter("name", String::class)
-                        .build()
-                )
-                .addProperty(
-                    PropertySpec.builder("name", String::class)
-                        .initializer("name")
-                        .build()
-                )
-                .addFunction(
-                    FunSpec.builder("greet")
-                        .addStatement("println(%P)", "Hello, \$name")
-                        .build()
-                )
-                .build()
-        )
-        .build()
-
-    file.writeTo(System.out)
+    
 }
