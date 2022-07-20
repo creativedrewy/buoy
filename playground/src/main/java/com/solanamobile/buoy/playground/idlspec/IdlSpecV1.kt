@@ -25,6 +25,18 @@ data class Arg(
     val type: String
 )
 
+//data class VecType(
+//    val vec: Any
+//)
+//
+//data class OptionalType(
+//    val option: Any
+//)
+//
+//data class DefinedParam(
+//    val defined: String
+//)
+
 data class AccountData(
     val name: String,
     val type: AccountDataType
