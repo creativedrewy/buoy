@@ -1,5 +1,7 @@
 package com.solanamobile.buoy.playground
 
+import com.google.gson.Gson
+import com.solanamobile.buoy.playground.idlspec.IdlRootV1
 import java.io.File
 
 /**
@@ -9,9 +11,14 @@ fun main(arguments: Array<String>) {
     println("----------------------------------------")
     println("")
 
-    File(arguments[0]).readLines().forEach {
-        println(it)
-    }
+    val gson = Gson()
+
+    val jsonSrc = File(arguments[0]).readText()
+    val idlSource = gson.fromJson(jsonSrc, IdlRootV1::class.java)
+
+    println(":: Your IDL: $idlSource ::")
+
+
 }
 
 //    val greeterClass = ClassName("", "Greeter")
