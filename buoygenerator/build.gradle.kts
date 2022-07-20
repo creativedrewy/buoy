@@ -16,7 +16,7 @@ repositories {
 
 gradlePlugin {
     plugins {
-        create("simplePlugin") {
+        create("buoyPlugin") {
             id = "buoy-plugin"
             implementationClass = "com.solanamobile.buoy.GeneratorPlugin"
         }
@@ -39,23 +39,3 @@ publishing {
         mavenLocal()
     }
 }
-
-//publishing {
-//    publications {
-//        mavenJava(MavenPublication) {
-//            artifact("$buildDir/outputs/aar/solana-release.aar")  {
-//                builtBy tasks.getByName("assemble")
-//            }
-//            artifactId 'solana'
-//            versionMapping {
-//                usage('java-api') {
-//                    fromResolutionOf('runtimeClasspath')
-//                }
-//                usage('java-runtime') {
-//                    fromResolutionResult()
-//                }
-//            }
-//
-//        }
-//    }
-//}

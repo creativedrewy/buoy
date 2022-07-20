@@ -4,7 +4,7 @@ pluginManagement {
         google()
         mavenCentral()
         mavenLocal()
-        maven { url = "./AnchorGenerator/build/repository" }
+        maven { url = "./buoygenerator/build/repository" }
     }
 }
 
@@ -23,4 +23,4 @@ include ':app'
 include ':playground'
 include ':web3core'
 project(":web3core").projectDir = new File("../SolanaKT/core")
-include ':AnchorGenerator'
+include ':buoygenerator'

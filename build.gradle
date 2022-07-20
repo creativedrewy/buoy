@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.solanamobile.buoy:AnchorGenerator:0.1.0"
+        classpath "com.solanamobile.buoy:buoygenerator:0.1.0"
     }
 }
 
