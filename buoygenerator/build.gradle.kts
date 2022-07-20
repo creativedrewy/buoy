@@ -25,7 +25,11 @@ gradlePlugin {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("com.android.tools.build:gradle:4.0.0")
+
+    implementation("com.android.tools.build:gradle:7.0.0")
+    implementation("com.squareup:kotlinpoet:1.12.0")
+    implementation("com.google.code.gson:gson:2.9.0")
+
     testImplementation("junit:junit:4.13")
     testImplementation(gradleApi())
 }

@@ -10,6 +10,9 @@ import androidx.compose.ui.Modifier
 import com.solanamobile.buoysample.ui.theme.BuoySampleTheme
 
 class MainActivity : ComponentActivity() {
+
+//    val greeter = Greeter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

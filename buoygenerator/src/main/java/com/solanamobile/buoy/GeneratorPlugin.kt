@@ -9,8 +9,5 @@ class GeneratorPlugin: Plugin<Project> {
     override fun apply(project: Project) {
         project.tasks.register<ProcessIdlTask>("buoyGenerator")
         project.tasks.findByPath("assemble")?.dependsOn("buoyGenerator")
-
-        //TODO: Ensure dependencies for the generated code
-        //TODO: Add generated output to source sets
     }
 }
