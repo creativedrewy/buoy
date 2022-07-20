@@ -2,6 +2,9 @@ package com.solanamobile.buoy.playground
 
 import com.google.gson.Gson
 import com.solanamobile.buoy.playground.idlspec.IdlRootV1
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.TypeSpec
 import java.io.File
 
 /**
@@ -16,9 +19,20 @@ fun main(arguments: Array<String>) {
     val jsonSrc = File(arguments[0]).readText()
     val idlSource = gson.fromJson(jsonSrc, IdlRootV1::class.java)
 
-    println(":: Your IDL: $idlSource ::")
+    val contractFile = FileSpec.builder("com.solanamobile.buoy", idlSource.name)
+    val mainClass = contractFile.addType(
+        TypeSpec.classBuilder(idlSource.name)
+            .build()
+    )
 
+    idlSource.instructions.forEach { instruction ->
+        mainClass.addFunction(
+            FunSpec.builder(instruction.name)
+                .build()
+        ).build()
+    }
 
+    contractFile.build().writeTo(System.out)
 }
 
 //    val greeterClass = ClassName("", "Greeter")
