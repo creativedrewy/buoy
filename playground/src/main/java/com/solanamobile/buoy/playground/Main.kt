@@ -18,9 +18,11 @@ fun main(arguments: Array<String>) {
 
     val gson = Gson()
 
+    //Parse the IDL Json and deserialize into objects
     val jsonSrc = File(arguments[0]).readText()
     val idlSource = gson.fromJson(jsonSrc, IdlRootV1::class.java)
 
+    //Use the objects to generate the contract file
     val contractFile = FileSpec.builder("com.solanamobile.buoy", idlSource.name)
     val mainClass = contractFile.addType(
         TypeSpec.classBuilder(idlSource.name)
