@@ -51,9 +51,9 @@ android {
     }
 }
 
-buoyGenerator {
-    idlFilePath = file('src/test.json')
-}
+//buoyGenerator {
+//    idlFilePath = file('src/test.json')
+//}
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'

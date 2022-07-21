@@ -11,7 +11,7 @@ import com.solanamobile.buoysample.ui.theme.BuoySampleTheme
 
 class MainActivity : ComponentActivity() {
 
-//    val greeter = Greeter
+//    val gret = Greeter("GOT IT")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

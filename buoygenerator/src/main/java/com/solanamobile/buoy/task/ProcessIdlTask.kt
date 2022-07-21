@@ -27,53 +27,7 @@ abstract class ProcessIdlTask @Inject constructor(objects: ObjectFactory) : Defa
         val saveDir = File(project.buildDir.path + "/generated/sources/com/solanamobile/buoy")
         saveDir.mkdirs()
 
-//        val ext = project.extensions.getByType(AppExtension::class.java)
-//        println(":: Your Android ext: ${ ext.toString() } ::")
-//
-//        val container = project.container(BaseVariantImpl::class.java)
-//        val androidExtension = project.extensions.findByType(BaseExtension::class.java)
-//
-//        val androidSourceSets = androidExtension?.sourceSets?.getByName("main")
-        //androidSourceSets?.kotlinSourceSet
-
-//        container.forEach { baseVariant ->
-//            if (baseVariant.sourceSets.any { it.name == "main" }) {
-//                try {
-//
-//                } catch (e: Exception) {
-//
-//                }
-//            }
-//        }
-
-        //com.android.build.gradle.AppExtension
-//    container.all {
-//    if (it.sourceSets.any { it.name == sourceSetName }) {
-//      if (kotlinSourceSet == null) {
-//        try {
-//          // AGP 7.0.0+: do things lazily
-//          it.javaClass.getMethod("registerJavaGeneratingTask", TaskProvider::class.java, Array<File>::class.java)
-//              .invoke(it, taskProvider, arrayOf(outputDir.get().asFile))
-//        } catch (e: Exception) {
-//          // Older AGP: do things eagerly
-//          it.registerJavaGeneratingTask(taskProvider.get(), outputDir.get().asFile)
-//        }
-//      } else {
-//        // The kotlinSourceSet carries task dependencies, calling srcDir() above is enough
-//        // to setup task dependencies
-//        // addJavaSourceFoldersToModel is still required for AS to see the sources
-//        // See https://github.com/apollographql/apollo-android/issues/3351
-//        it.addJavaSourceFoldersToModel(outputDir.get().asFile)
-//      }
-//    }
-
-
-//        val container = project.extensions.findByType(SourceSetContainer::class.java)
-//        container?.forEach { srcSet ->
-//            srcSet.allSource.srcDir(saveDir.path)
-//        }
-
-        val file = FileSpec.builder("", "Greeter")
+        val file = FileSpec.builder("com.solanamobile.buoy", "Greeter")
             .addType(
                 TypeSpec.classBuilder("Greeter")
                     .primaryConstructor(

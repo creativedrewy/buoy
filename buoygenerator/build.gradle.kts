@@ -23,10 +23,28 @@ gradlePlugin {
     }
 }
 
+//abstract class GeneratePluginVersion : DefaultTask() {
+//    @get:org.gradle.api.tasks.Input
+//    abstract val version: Property<String>
+//
+//    @get:org.gradle.api.tasks.OutputDirectory
+//    abstract val outputDir: DirectoryProperty
+//}
+//
+//val pluginVersionTaskProvider = tasks.register("pluginVersion", GeneratePluginVersion::class.java) {
+//    outputDir.set(project.layout.buildDirectory.dir("generated/sources/com/solanamobile/buoy"))
+//    version.set(project.version.toString())
+//}
+//
+//configure<org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension> {
+//    val versionFileProvider = pluginVersionTaskProvider.flatMap { it.outputDir }
+//    sourceSets.getByName("main").kotlin.srcDir(versionFileProvider)
+//}
+
 dependencies {
     implementation(kotlin("stdlib"))
 
-    implementation("com.android.tools.build:gradle:7.0.0")
+    implementation("com.android.tools.build:gradle:7.2.1")
     implementation("com.squareup:kotlinpoet:1.12.0")
     implementation("com.google.code.gson:gson:2.9.0")
 
