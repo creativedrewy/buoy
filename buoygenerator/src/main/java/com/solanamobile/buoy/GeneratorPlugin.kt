@@ -13,16 +13,21 @@ class GeneratorPlugin: Plugin<Project> {
         val taskProvider = project.tasks.register<ProcessIdlTask>("buoyGenerator")
         project.tasks.findByPath("assemble")?.dependsOn("buoyGenerator")
 
-        project.afterEvaluate {
-            val saveDir = File(project.buildDir.path + "/generated/sources/com/solanamobile/buoy")
-            saveDir.mkdirs()
+        //project.extensions.findByName("kotlin") as? KotlinProjectExtension
 
+        val saveDir = File(project.buildDir.path + "/generated/kotlin")
+        saveDir.mkdirs()
+
+        project.afterEvaluate {
             val container = project.container(BaseVariant::class.java)
             val androidExtension = project.extensions.findByType(AppExtension::class.java)
 
             androidExtension?.applicationVariants?.forEach { variant ->
                 container.add(variant)
             }
+
+//        val srcContainer = project.properties.get("sourceSets") as SourceSetContainer
+//        println(":: Here is your SOURCE set: ${ srcContainer.size } ::")
 
             container.all {
 //                javaClass.getMethod("registerJavaGeneratingTask", TaskProvider::class.java, Array<File>::class.java)
@@ -34,6 +39,31 @@ class GeneratorPlugin: Plugin<Project> {
         }
     }
 }
+
+//fun createAllKotlinSourceSetServices(
+//    apolloExtension: DefaultApolloExtension,
+//    project: Project,
+//    sourceFolder: String,
+//    nameSuffix: String,
+//    action: Action<Service>,
+//) {
+//  //extensions.findByName("kotlin") as? KotlinProjectExtension
+//
+//  project.kotlinProjectExtensionOrThrow.sourceSets.forEach { kotlinSourceSet ->
+//    val name = "${kotlinSourceSet.name}${nameSuffix.capitalizeFirstLetter()}"
+//
+//    apolloExtension.service(name) { service ->
+//      action.execute(service)
+//      check(!service.sourceFolder.isPresent) {
+//        "Apollo: service.sourceFolder is not used when calling createAllKotlinJvmSourceSetServices. Use the parameter instead"
+//      }
+//      service.srcDir("src/${kotlinSourceSet.name}/graphql/$sourceFolder")
+//      (service as DefaultService).outputDirAction = Action<Service.DirectoryConnection> { connection ->
+//        kotlinSourceSet.kotlin.srcDir(connection.outputDir)
+//      }
+//    }
+//  }
+//}
 
 //container.all {
 //    if (it.sourceSets.any { it.name == sourceSetName }) {
