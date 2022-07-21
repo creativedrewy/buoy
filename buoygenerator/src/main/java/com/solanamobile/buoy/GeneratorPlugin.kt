@@ -2,6 +2,7 @@ package com.solanamobile.buoy
 
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.api.BaseVariant
+import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import com.solanamobile.buoy.task.ProcessIdlTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -15,7 +16,7 @@ class GeneratorPlugin: Plugin<Project> {
 
         //project.extensions.findByName("kotlin") as? KotlinProjectExtension
 
-        val saveDir = File(project.buildDir.path + "/generated/kotlin")
+        val saveDir = File(project.buildDir.path + "/generated/source/buoy")
         saveDir.mkdirs()
 
         project.afterEvaluate {
@@ -24,7 +25,31 @@ class GeneratorPlugin: Plugin<Project> {
 
             androidExtension?.applicationVariants?.forEach { variant ->
                 container.add(variant)
+
+                variant.registerJavaGeneratingTask(taskProvider, saveDir)
+                variant.addJavaSourceFoldersToModel(saveDir)
+
+                variant.sourceSets.forEach { srcSet ->
+//                    println(":: Variant source set: ${srcSet.name} ::")
+                }
+
             }
+
+            val baseAppModule = project.extensions.findByType(BaseAppModuleExtension::class.java)
+            baseAppModule?.sourceSets?.forEach { srcSet ->
+                srcSet.java {
+                    srcDir("build/generated/source/buoy")
+                }
+            }
+
+//            androidExtension?.sourceSets?.forEach { srcSet ->
+//                srcSet.java {
+//                    srcDir(File("build/generated/source/buoy"))
+//                }
+//                srcSet.kotlin {
+//                    srcDir(File("build/generated/source/buoy"))
+//                }
+//            }
 
 //        val srcContainer = project.properties.get("sourceSets") as SourceSetContainer
 //        println(":: Here is your SOURCE set: ${ srcContainer.size } ::")
@@ -33,6 +58,7 @@ class GeneratorPlugin: Plugin<Project> {
 //                javaClass.getMethod("registerJavaGeneratingTask", TaskProvider::class.java, Array<File>::class.java)
 //                    .invoke(this, taskProvider, saveDir)
 
+                //registerSourceGeneratingTask
                 registerJavaGeneratingTask(taskProvider, saveDir)
                 addJavaSourceFoldersToModel(saveDir)
             }

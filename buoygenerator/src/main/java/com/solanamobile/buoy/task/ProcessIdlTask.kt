@@ -24,7 +24,7 @@ abstract class ProcessIdlTask @Inject constructor(objects: ObjectFactory) : Defa
         //TODO: Ensure dependencies for the generated code
         println(":: You have provided path: ${ idlFilePath.orNull?.asFile.toString() } ::")
 
-        val saveDir = File(project.buildDir.path + "/generated/kotlin")
+        val saveDir = File(project.buildDir.path + "/generated/source/buoy")
         saveDir.mkdirs()
 
         val file = FileSpec.builder("com.solanamobile.buoy", "Greeter")
