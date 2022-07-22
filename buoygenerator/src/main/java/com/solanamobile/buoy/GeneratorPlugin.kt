@@ -2,7 +2,6 @@ package com.solanamobile.buoy
 
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.api.BaseVariant
-import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import com.solanamobile.buoy.task.ProcessIdlTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -13,8 +12,6 @@ class GeneratorPlugin: Plugin<Project> {
     override fun apply(project: Project) {
         val taskProvider = project.tasks.register<ProcessIdlTask>("buoyGenerator")
         project.tasks.findByPath("assemble")?.dependsOn("buoyGenerator")
-
-        //project.extensions.findByName("kotlin") as? KotlinProjectExtension
 
         val saveDir = File(project.buildDir.path + "/generated/source/buoy")
         saveDir.mkdirs()
@@ -28,37 +25,22 @@ class GeneratorPlugin: Plugin<Project> {
 
                 variant.registerJavaGeneratingTask(taskProvider, saveDir)
                 variant.addJavaSourceFoldersToModel(saveDir)
-
-                variant.sourceSets.forEach { srcSet ->
-//                    println(":: Variant source set: ${srcSet.name} ::")
-                }
-
             }
 
-            val baseAppModule = project.extensions.findByType(BaseAppModuleExtension::class.java)
-            baseAppModule?.sourceSets?.forEach { srcSet ->
-                srcSet.java {
-                    srcDir("build/generated/source/buoy")
-                }
-            }
-
-//            androidExtension?.sourceSets?.forEach { srcSet ->
-//                srcSet.java {
-//                    srcDir(File("build/generated/source/buoy"))
-//                }
-//                srcSet.kotlin {
-//                    srcDir(File("build/generated/source/buoy"))
-//                }
+//            override val sourceSets: DomainObjectCollection<Named>
+//            get() = with(project.extensions.getByName("kotlin")) {
+//                @Suppress("UNCHECKED_CAST")
+//                javaClass.getMethod("getSourceSets")
+//                    .invoke(this) as DomainObjectCollection<Named>
 //            }
 
-//        val srcContainer = project.properties.get("sourceSets") as SourceSetContainer
-//        println(":: Here is your SOURCE set: ${ srcContainer.size } ::")
+//            override fun onSourceSetAdded(sourceSet: Named, spec: BuildConfigClassSpec) {
+//                (sourceSet.javaClass.getMethod("getKotlin")
+//                    .invoke(sourceSet) as SourceDirectorySet)
+//                    .srcDir(spec.generateTask)
+//            }
 
             container.all {
-//                javaClass.getMethod("registerJavaGeneratingTask", TaskProvider::class.java, Array<File>::class.java)
-//                    .invoke(this, taskProvider, saveDir)
-
-                //registerSourceGeneratingTask
                 registerJavaGeneratingTask(taskProvider, saveDir)
                 addJavaSourceFoldersToModel(saveDir)
             }
