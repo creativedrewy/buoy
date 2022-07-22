@@ -1,7 +1,6 @@
 package com.solanamobile.buoy
 
 import com.android.build.gradle.AppExtension
-import com.android.build.gradle.api.BaseVariant
 import com.solanamobile.buoy.task.ProcessIdlTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -24,23 +23,15 @@ class GeneratorPlugin: Plugin<Project> {
         project.tasks
             .withType(KotlinCompile::class.java)
             .configureEach {
-                this.source(saveDir)
+                source(saveDir)
             }
 
         project.afterEvaluate {
-            val container = project.container(BaseVariant::class.java)
             val androidExtension = project.extensions.findByType(AppExtension::class.java)
 
             androidExtension?.applicationVariants?.forEach { variant ->
-                container.add(variant)
-
                 variant.registerJavaGeneratingTask(taskProvider, saveDir)
                 variant.addJavaSourceFoldersToModel(saveDir)
-            }
-
-            container.all {
-                registerJavaGeneratingTask(taskProvider, saveDir)
-                addJavaSourceFoldersToModel(saveDir)
             }
         }
     }
