@@ -4,18 +4,20 @@ import com.google.gson.Gson
 import com.solanamobile.buoy.playground.idlspec.IdlRootV1
 import com.solanamobile.web3.core.PublicKey
 import com.solanamobile.web3.core.TransactionInstruction
-import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.TypeSpec
 import java.io.File
 import java.security.MessageDigest
-import java.util.*
 import kotlin.reflect.KClass
 
 /**
  * ./gradlew :playground:run --args=<Path_to_json>
  */
 
-fun classTypeForArgType( argType: String ): KClass<*> {
-    return when(argType) {
+fun classTypeForArgType(argType: String): KClass<*> {
+    return when (argType) {
         "u8" -> UByte::class
         "u16" -> UShort::class
         "u32" -> UInt::class
@@ -26,25 +28,26 @@ fun classTypeForArgType( argType: String ): KClass<*> {
         "i64" -> Long::class
         "publicKey" -> PublicKey::class
         else -> {
-//            throw Exception("This should not happen.")
             return ClassName("solanapackagename", argType)::class
         }
     }
 }
 
-private fun convertCamelToSnakeCase(camelCase : String) : String {
+private fun convertCamelToSnakeCase(camelCase: String): String {
     val snakeCase = StringBuilder()
-    for(character in camelCase) {
-        if(character.isUpperCase()) {
+
+    for (character in camelCase) {
+        if (character.isUpperCase()) {
             snakeCase.append("_${character.toLowerCase()}")
         } else {
             snakeCase.append(character)
         }
     }
+
     return snakeCase.removePrefix("_").toString()
 }
 
-fun sighash( nameSpace: String = "global", name: String ): Array<Byte> {
+fun sighash(nameSpace: String = "global", name: String): Array<Byte> {
     val preImage = String.format("%s:%s", nameSpace, name)
     val preImageByteArray = preImage.toByteArray()
     val md = MessageDigest.getInstance("SHA-256")
@@ -74,8 +77,7 @@ fun main(arguments: Array<String>) {
     idlSource.instructions.forEach { instruction ->
         val functionBuilder = FunSpec.builder(instruction.name)
 
-        functionBuilder
-            .returns(TransactionInstruction::class)
+        functionBuilder.returns(TransactionInstruction::class)
 
         // start the list of function
         functionBuilder.addStatement("val = listOf(")
@@ -84,35 +86,38 @@ fun main(arguments: Array<String>) {
         // the pubkey and generate the AccountMeta item in the list
         instruction.args.forEach { arg ->
             val type = classTypeForArgType(arg.type)
-            functionBuilder
-                .addParameter(arg.name, type)
+            functionBuilder.addParameter(arg.name, type)
         }
 
         instruction.accounts.forEach { metaDescriptor ->
-
-            val metaItem = String.format("\tAccountMeta(publicKey = %s, isSigner = %s, isWritable = %s)", metaDescriptor.name, metaDescriptor.isSigner.toString(), metaDescriptor.isMut.toString())
+            val metaItem = String.format(
+                "\tAccountMeta(publicKey = %s, isSigner = %s, isWritable = %s)",
+                metaDescriptor.name,
+                metaDescriptor.isSigner.toString(),
+                metaDescriptor.isMut.toString()
+            )
 
             functionBuilder
                 .addParameter(metaDescriptor.name, PublicKey::class)
                 .addStatement(metaItem)
-
         }
 
         // close the listOf function
         functionBuilder.addStatement(")")
 
-        val sighHashStatement = String.format("val sigHash: Array<Byte> = sighash(\"%s\", \"%s\")", "global", convertCamelToSnakeCase(instruction.name))
-        functionBuilder.addStatement( sighHashStatement )
+        val sighHashStatement = String.format(
+            "val sigHash: Array<Byte> = sighash(\"%s\", \"%s\")",
+            "global",
+            convertCamelToSnakeCase(instruction.name)
+        )
+        functionBuilder.addStatement(sighHashStatement)
 
         val instructionDataStatementBuilder = StringBuilder()
-
-        instructionDataStatementBuilder
-            .append("val instructionData: Array<Byte> = sigHash")
+        instructionDataStatementBuilder.append("val instructionData: Array<Byte> = sigHash")
 
         instruction.args.forEach { arg ->
-            functionBuilder
-                .addStatement(String.format("val %sBytes = %s.toBytes()", arg.name, arg.name))
-            instructionDataStatementBuilder.append( String.format(" + %sBytes", arg.name, arg.name) )
+            functionBuilder.addStatement(String.format("val %sBytes = %s.toBytes()", arg.name, arg.name))
+            instructionDataStatementBuilder.append(String.format(" + %sBytes", arg.name, arg.name))
         }
 
         val instructionDataStatement = instructionDataStatementBuilder.toString()
@@ -131,5 +136,4 @@ fun main(arguments: Array<String>) {
     }
 
     contractFile.build().writeTo(System.out)
-
 }
