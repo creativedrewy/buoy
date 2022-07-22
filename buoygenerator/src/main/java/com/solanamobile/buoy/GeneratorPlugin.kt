@@ -8,10 +8,6 @@ import org.gradle.kotlin.dsl.register
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.File
 
-//buoyGenerator {
-//    idlFilePath = file('src/test.json')
-//}
-
 class GeneratorPlugin: Plugin<Project> {
     override fun apply(project: Project) {
         val taskProvider = project.tasks.register<ProcessIdlTask>("buoyGenerator")

@@ -21,7 +21,6 @@ abstract class ProcessIdlTask @Inject constructor(objects: ObjectFactory) : Defa
 
     @TaskAction
     fun processIdl() {
-        //TODO: Ensure dependencies for the generated code
         println(":: You have provided path: ${ idlFilePath.orNull?.asFile.toString() } ::")
 
         val saveDir = File(project.buildDir.path + "/generated/source/buoy")
@@ -47,12 +46,6 @@ abstract class ProcessIdlTask @Inject constructor(objects: ObjectFactory) : Defa
                     )
                     .build()
             )
-//            .addFunction(
-//                FunSpec.builder("main")
-//                    .addParameter("args", String::class, KModifier.VARARG)
-//                    .addStatement("%T(args[0]).greet()", greeterClass)
-//                    .build()
-//            )
             .build()
 
         file.writeTo(saveDir)
