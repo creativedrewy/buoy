@@ -27,19 +27,6 @@ class GeneratorPlugin: Plugin<Project> {
                 variant.addJavaSourceFoldersToModel(saveDir)
             }
 
-//            override val sourceSets: DomainObjectCollection<Named>
-//            get() = with(project.extensions.getByName("kotlin")) {
-//                @Suppress("UNCHECKED_CAST")
-//                javaClass.getMethod("getSourceSets")
-//                    .invoke(this) as DomainObjectCollection<Named>
-//            }
-
-//            override fun onSourceSetAdded(sourceSet: Named, spec: BuildConfigClassSpec) {
-//                (sourceSet.javaClass.getMethod("getKotlin")
-//                    .invoke(sourceSet) as SourceDirectorySet)
-//                    .srcDir(spec.generateTask)
-//            }
-
             container.all {
                 registerJavaGeneratingTask(taskProvider, saveDir)
                 addJavaSourceFoldersToModel(saveDir)
@@ -47,48 +34,3 @@ class GeneratorPlugin: Plugin<Project> {
         }
     }
 }
-
-//fun createAllKotlinSourceSetServices(
-//    apolloExtension: DefaultApolloExtension,
-//    project: Project,
-//    sourceFolder: String,
-//    nameSuffix: String,
-//    action: Action<Service>,
-//) {
-//  //extensions.findByName("kotlin") as? KotlinProjectExtension
-//
-//  project.kotlinProjectExtensionOrThrow.sourceSets.forEach { kotlinSourceSet ->
-//    val name = "${kotlinSourceSet.name}${nameSuffix.capitalizeFirstLetter()}"
-//
-//    apolloExtension.service(name) { service ->
-//      action.execute(service)
-//      check(!service.sourceFolder.isPresent) {
-//        "Apollo: service.sourceFolder is not used when calling createAllKotlinJvmSourceSetServices. Use the parameter instead"
-//      }
-//      service.srcDir("src/${kotlinSourceSet.name}/graphql/$sourceFolder")
-//      (service as DefaultService).outputDirAction = Action<Service.DirectoryConnection> { connection ->
-//        kotlinSourceSet.kotlin.srcDir(connection.outputDir)
-//      }
-//    }
-//  }
-//}
-
-//container.all {
-//    if (it.sourceSets.any { it.name == sourceSetName }) {
-//      if (kotlinSourceSet == null) {
-//        try {
-//          // AGP 7.0.0+: do things lazily
-//          it.javaClass.getMethod("registerJavaGeneratingTask", TaskProvider::class.java, Array<File>::class.java)
-//              .invoke(it, taskProvider, arrayOf(outputDir.get().asFile))
-//        } catch (e: Exception) {
-//          // Older AGP: do things eagerly
-//          it.registerJavaGeneratingTask(taskProvider.get(), outputDir.get().asFile)
-//        }
-//      } else {
-//        // The kotlinSourceSet carries task dependencies, calling srcDir() above is enough
-//        // to setup task dependencies
-//        // addJavaSourceFoldersToModel is still required for AS to see the sources
-//        // See https://github.com/apollographql/apollo-android/issues/3351
-//        it.addJavaSourceFoldersToModel(outputDir.get().asFile)
-//      }
-//    }
