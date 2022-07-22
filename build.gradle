@@ -2,6 +2,10 @@ buildscript {
     ext {
         compose_version = '1.1.1'
     }
+
+    dependencies {
+        classpath "com.solanamobile.buoy:buoygenerator:0.1.0"
+    }
 }
 
 plugins {
