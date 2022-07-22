@@ -1,3 +1,4 @@
+
 plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
@@ -25,6 +26,12 @@ gradlePlugin {
 
 dependencies {
     implementation(kotlin("stdlib"))
+
+    implementation(gradleApi())
+    implementation(gradleKotlinDsl())
+
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin")
 
     implementation("com.android.tools.build:gradle:7.2.1")
     implementation("com.squareup:kotlinpoet:1.12.0")

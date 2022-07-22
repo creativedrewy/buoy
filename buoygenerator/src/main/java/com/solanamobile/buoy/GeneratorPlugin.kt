@@ -6,7 +6,12 @@ import com.solanamobile.buoy.task.ProcessIdlTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.register
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.File
+
+//buoyGenerator {
+//    idlFilePath = file('src/test.json')
+//}
 
 class GeneratorPlugin: Plugin<Project> {
     override fun apply(project: Project) {
@@ -15,6 +20,12 @@ class GeneratorPlugin: Plugin<Project> {
 
         val saveDir = File(project.buildDir.path + "/generated/source/buoy")
         saveDir.mkdirs()
+
+        project.tasks
+            .withType(KotlinCompile::class.java)
+            .configureEach {
+                this.source(saveDir)
+            }
 
         project.afterEvaluate {
             val container = project.container(BaseVariant::class.java)

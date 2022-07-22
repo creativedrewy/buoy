@@ -49,17 +49,7 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
-
-//    sourceSets {
-//        main {
-//            java.srcDirs = ['build/generated/source/buoy']
-//        }
-//    }
 }
-
-//buoyGenerator {
-//    idlFilePath = file('src/test.json')
-//}
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'

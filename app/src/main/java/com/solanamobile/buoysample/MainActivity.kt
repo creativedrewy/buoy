@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import com.solanamobile.buoy.Greeter
 import com.solanamobile.buoysample.ui.theme.BuoySampleTheme
 
 class MainActivity : ComponentActivity() {
 
 //    val gret = Greeter("dd")
+    val g = Greeter("IT FINALLY WORKED")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
