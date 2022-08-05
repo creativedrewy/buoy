@@ -1,9 +1,9 @@
 package com.solanamobile.buoy.playground
 
 import com.google.gson.Gson
+import com.portto.solana.web3.PublicKey
+import com.portto.solana.web3.TransactionInstruction
 import com.solanamobile.buoy.playground.idlspec.IdlRootV1
-import com.solanamobile.web3.core.PublicKey
-import com.solanamobile.web3.core.TransactionInstruction
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
@@ -13,7 +13,7 @@ import java.security.MessageDigest
 import kotlin.reflect.KClass
 
 /**
- * ./gradlew :playground:run --args=<Path_to_json>
+ * ./gradlew :playground:run --args=<absolute_path_to_json>
  */
 
 fun classTypeForArgType(argType: String): KClass<*> {
@@ -58,6 +58,7 @@ fun sighash(nameSpace: String = "global", name: String): Array<Byte> {
 
 fun main(arguments: Array<String>) {
     println("----------------------------------------")
+    println(":: Beginning code generation ::")
     println("")
 
     val gson = Gson()

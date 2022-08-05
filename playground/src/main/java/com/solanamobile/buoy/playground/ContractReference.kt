@@ -1,8 +1,8 @@
 package com.solanamobile.buoy.playground
 
-import com.solanamobile.web3.core.AccountMeta
-import com.solanamobile.web3.core.PublicKey
-import com.solanamobile.web3.core.TransactionInstruction
+import com.portto.solana.web3.AccountMeta
+import com.portto.solana.web3.PublicKey
+import com.portto.solana.web3.TransactionInstruction
 
 class ContractReference {
 
